@@ -7,7 +7,7 @@ Após disparado o jogo, os tokens movimentam-se simultaneamente para qualquer po
 
 O jogo tem três níveis de dificuldade: fácil, intermediário e difícil. No fácil, os tokens movem-se mais lentamente e o tempo t é maior; no difícil, os tokens movem-se mais rapidamente; no nível intermediário, a velocidade de movimentação fica entre as velocidades dos níveis e difícil.
 
-Para rodar:
+### Para rodar:
 
     $ gcc -Wall -o jogo trabalhoSO.c -lcurses -lpthread
 
