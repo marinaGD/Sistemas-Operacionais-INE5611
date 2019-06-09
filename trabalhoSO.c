@@ -111,11 +111,10 @@ void menu(){
         break;
     case 'D':
     case 'd':
-        tempo_maximo = 30;
+        tempo_maximo = 15;
         velocidade = 0.5;
         inicializa_jogo();
         break;
-
     case 'q':
     case 'Q':
         pthread_mutex_destroy(&mutex);
@@ -162,16 +161,6 @@ void adiciona_tokens_no_tabuleiro(){
 }
 
 
-void limpa_tempo(){
-  for (int x = 0; x < COLS; x++){
-      attron(COLOR_PAIR(EMPTY_PAIR));
-      mvaddch(15, 9, EMPTY);
-      mvaddch(15, 8, EMPTY);
-      attroff(COLOR_PAIR(EMPTY_PAIR));
-  }
-}
-
-
 void init_outros(){
     cursor.morto = FALSE;
     cursor.x = 5;
@@ -184,17 +173,18 @@ void init_outros(){
 }
 
 void *conta_tempo() {
+    
     for(int i = 0; i <= tempo_maximo; i++) {
-        limpa_tempo(); 
         pthread_mutex_lock(&mutex);
-        mvprintw(15, 0, "Faltam %i segundos", tempo_maximo - i);
+        mvprintw(14, 0, "Faltam %i segundos", tempo_maximo - i);
+        refresh();
         pthread_mutex_unlock(&mutex);
         sleep(1);
     }
     perdeu = true;
     jogo_ativo = false;
     pthread_cancel(t_cursor);
-    refresh();
+    sleep(1);
     menu();
     pthread_exit(0);
 }
@@ -313,7 +303,8 @@ void *move_cursor() {
 void termina_jogo(){
   pthread_cancel(t_timer);
   ganhou = TRUE;
-  jogo_ativo = FALSE;
+  clear();
+  refresh();
   menu();
   pthread_exit(0);
 }
