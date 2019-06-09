@@ -19,6 +19,7 @@ bool jogo_ativo;
 char board[LINES][COLS];
 unsigned int tempo_maximo;
 unsigned int velocidade;
+int contGanhou = 0;
 
 // MÉTODOS
 void termina_jogo();
@@ -84,7 +85,7 @@ void menu(){
     refresh();
 
     if(ganhou) {
-        mvprintw(0, 0, "Parabens, voce ganhou!");
+        mvprintw(0, 0, "Parabens! Esta e a %i partida que voce ganhou!", contGanhou);
     } else if (perdeu) {
         mvprintw(0, 0, "Nao foi dessa vez :(");
     }
@@ -301,6 +302,7 @@ void *move_cursor() {
 
 
 void termina_jogo(){
+  contGanhou++;
   pthread_cancel(t_timer);
   ganhou = TRUE;
   clear();
