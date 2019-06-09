@@ -1,4 +1,4 @@
-#include <ncurses.h>
+#include <curses.h>
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
@@ -21,7 +21,6 @@ unsigned int tempo_maximo;
 unsigned int velocidade;
 
 // MÉTODOS
-void draw_board();
 void termina_jogo();
 void menu();
 void desenha_tabuleiro();
@@ -148,7 +147,6 @@ void desenha_tabuleiro(void) {
 
 
 void adiciona_tokens_no_tabuleiro(){
-  /* poe os tokens no tabuleiro */
 
   for (int i = 0; i < TOKENS; i++) {
     if (tokens[i].morto == FALSE){
@@ -157,8 +155,6 @@ void adiciona_tokens_no_tabuleiro(){
       attroff(COLOR_PAIR(TOKEN_PAIR));
     }
   }
-  
-  /* poe o cursor no tabuleiro */
 
   attron(COLOR_PAIR(CURSOR_PAIR));
   mvaddch(cursor.y, cursor.x, EMPTY);
@@ -220,13 +216,15 @@ void inicializa_jogo(){
     ganhou = FALSE;
     perdeu = FALSE;
 
+    clear();
+    refresh();
+    desenha_tabuleiro();
+
     init_tokens();
     init_outros();
     for(int i =0; i < TOKENS; i++){
       pthread_join(t_tokens[i], NULL);
     }
-    clear();
-    board_refresh();
   }
 
 
